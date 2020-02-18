@@ -40,6 +40,7 @@ export default {
 }
 
 body {
+  background-image: url('../src/assets/wallpaper.jpg');
   background-color: rgba(23, 50, 91, 1.0);
   color: white;
   font-family: Verdana, sans-serif;
