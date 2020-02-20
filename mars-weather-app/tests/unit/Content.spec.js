@@ -36,6 +36,14 @@ describe('Content.vue Test with Successful HTTP GET', () => {
       jest.resetModules();
       jest.clearAllMocks();
     });
+
+    it('loads the user data when the component is created and mounted', () => {
+      // check the name of the component
+      expect(wrapper.name()).toMatch('Content')
+
+      expect(axios.get).toHaveBeenCalledTimes(1);
+      expect(axios.get).toBeCalledWith('https://api.nasa.gov/insight_weather/?api_key=DEMO_KEY&feedtype=json&ver=1.0')
+    })
   });
 });
 
@@ -60,7 +68,7 @@ describe('ListTemps.vue Test', () => {
           }
         ]
       }
-    })
+    });
 
     // check the name of the component
     expect(wrapper.name()).toMatch('ListTemps')

@@ -25,7 +25,7 @@ describe('GetYourLocation.vue Test', () => {
     expect(wrapper.findAll('h1').at(0).text()).toMatch('Want to compare to Your Location?')
 
     // check that 3 columns are created in the table
-    expect(wrapper.findAll('th').length).toEqual(2)
+    expect(wrapper.findAll('th').length).toEqual(3)
     expect(wrapper.findAll('th').at(0).text()).toMatch('Latitude')
     expect(wrapper.findAll('th').at(1).text()).toMatch('Longitude')
     expect(wrapper.findAll('th').at(2).text()).toMatch('City')
