@@ -1,6 +1,45 @@
-import { shallowMount } from '@vue/test-utils'
-import ListTemps from '@/components/ListTemps.vue'
+import { shallowMount } from '@vue/test-utils';
+import ListTemps from '@/components/ListTemps.vue';
+import Content from '@/components/Content.vue';
+import axios from 'axios';
 
+// Mock the axios library
+jest.mock('axios');
+
+// API fetching test
+describe('Content.vue Test with Successful HTTP GET', () => {
+  var wrapper;
+
+  beforeEach(() => {
+    const response_get = { data: [
+      {
+        earthDate: 1,
+        sol: 1,
+        avgTemp: 'temp_1',
+        windSpd: 'spd1'
+      },
+      {
+        earthDate: 2,
+        sol: 2,
+        avgTemp: 'temp_2',
+        windSpd: 'spd2'
+      }
+    ] };
+
+    // Set the response from the GET call to axios
+    axios.get.mockResolvedValue(response_get);
+
+    // render the component
+    wrapper = shallowMount(Content);
+
+    afterEach(() => {
+      jest.resetModules();
+      jest.clearAllMocks();
+    });
+  });
+});
+
+// List of temps testing
 describe('ListTemps.vue Test', () => {
   it('renders a table of temps when component is created', () => {
     // render the component
@@ -47,5 +86,5 @@ describe('ListTemps.vue Test', () => {
     // expect(wrapper.findAll('td').at(5).text()).toMatch('2019-12-31')
     // expect(wrapper.findAll('td').at(6).text()).toMatch('-55')
     // expect(wrapper.findAll('td').at(7).text()).toMatch('200.5')
-  })
-})
+  });
+});
