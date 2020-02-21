@@ -1,6 +1,6 @@
 <template>
   <div class="content-container">
-    <h1>List of Temps:</h1>
+    <h3>List of Mars Temps:</h3>
     <br>
     <table id="temps-table">
       <!-- Table Header Row -->
@@ -8,14 +8,12 @@
         <th>Sol</th>
         <th>Date</th>
         <th>AvgTemp</th>
-        <th>Speed</th>
       </tr>
       <!-- Table Elements (Rows) -->
       <tr v-for="temp in temps" :key="temp.sol">
         <td>{{ temp.sol }}</td>
         <td>{{ temp.date }}</td>
         <td>{{ temp.avg }}</td>
-        <td>{{ temp.spd }}</td>
       </tr>
     </table>
     <br>

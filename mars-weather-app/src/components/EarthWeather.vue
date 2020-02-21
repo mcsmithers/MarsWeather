@@ -1,19 +1,19 @@
 <template>
   <div class="content-container">
-  <h1>Here's your weather compared to Mars:</h1>
+  <h3>Here's your weather compared to Mars:</h3>
   <br>
   <table id="earth-temps-table">
       <!-- Table Header Row -->
       <tr>
         <th>Date</th>
-        <th>AvgTemp</th>
-        <th>Speed</th>
+        <th>Temp</th>
+        <th>City</th>
       </tr>
       <!-- Table Elements (Rows) -->
       <tr v-for="earthTemp in earthTemps" :key="earthTemp.earthDate">
-        <td>{{ earthTemp.earthDate }}</td>
-        <td>{{ earthTemp.locAvg }}</td>
-        <td>{{ earthTemp.windSpd }}</td>
+        <td>{{ earthTemp.date }}</td>
+        <td>{{ earthTemp.avg }}</td>
+        <td>{{ earthTemp.city }}</td>
       </tr>
     </table>
   </div>
@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  name: 'Weather',
+  name: 'EarthWeather',
   props: {
     earthTemps: Array
   }
