@@ -6,7 +6,7 @@ describe('UserZipInput.vue Test', () => {
   // render the component
     const wrapper = shallowMount(UserZipInput)
 
-  // check the name of the component
-  expect(wrapper.name()).toMatch('UserZipInput')
+    // check the name of the component
+    expect(wrapper.name()).toMatch('UserZipInput')
   })
 })

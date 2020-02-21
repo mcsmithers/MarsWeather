@@ -1,6 +1,6 @@
 <template>
   <div class="content-container">
-  <h3>Here's your weather compared to Mars:</h3>
+  <h3>Here's your local weather from today compared to Mars:</h3>
   <br>
   <table id="earth-temps-table">
       <!-- Table Header Row -->
