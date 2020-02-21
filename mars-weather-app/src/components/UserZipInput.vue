@@ -1,6 +1,6 @@
 <template>
   <div class="content-container">
-  <h2>Want to compare to your local weather today?</h2>
+  <h3>Want to compare to your local weather today?</h3>
   <br>
   <div class="form">
   <label for="newName">Zip Code:</label>
