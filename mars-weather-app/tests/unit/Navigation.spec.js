@@ -1,10 +1,16 @@
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Navigation from '@/components/Navigation.vue'
+import VueRouter from 'vue-router'
+
+const localVue = createLocalVue()
+localVue.use(VueRouter)
+const router = new VueRouter()
+
 
 describe('Navigation.vue Test', () => {
   it('renders navigation links when component is created', () => {
     // render the component
-    const wrapper = shallowMount(Navigation)
+    const wrapper = shallowMount(Navigation, { localVue, router })
 
     // check the name of the component
     expect(wrapper.name()).toMatch('Navigation')

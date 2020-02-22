@@ -20,7 +20,7 @@ export default {
   methods: {
     getZipCode (zip) {
       if (this.zip.value !== '') {
-        console.log('zip code input: ', this.zip.value)
+        // console.log('zip code input: ', this.zip.value)
         this.$emit('zip', this.zip.value)
 
         // Clear the variables used for reading in the new user's info

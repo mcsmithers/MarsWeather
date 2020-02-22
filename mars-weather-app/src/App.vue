@@ -1,32 +1,88 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <div>
+    <div class="grid-container">
+      <app-header class="header-title" v-bind:title="title"></app-header>
+      <app-navigation class="navigation-links"></app-navigation>
+      <router-view class="data-content" />
+      <app-footer class="footer" v-bind:message="footerMessage"></app-footer>
     </div>
-    <router-view/>
   </div>
 </template>
 
+<script>
+import Header from './components/Header.vue'
+import Navigation from './components/Navigation.vue'
+import Footer from './components/Footer.vue'
+
+export default {
+  name: 'app',
+  components: {
+    'app-header': Header,
+    'app-navigation': Navigation,
+    'app-footer': Footer
+  },
+  data () {
+    return {
+      title: 'Mars Weather',
+      footerMessage: 'Christina Smithers, 2020'
+    }
+  }
+}
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
-#nav {
-  padding: 30px;
+body {
+  background:url('./assets/wallpaper.jpg');
+  background-size: cover;
+  color: white;
+  font-family: Verdana, sans-serif;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.header-title {
+  grid-area: header;
+}
+.navigation-links {
+  grid-area: links;
+}
+.data-content {
+  grid-area: data;
+}
+.footer {
+  grid-area: footer;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+.grid-container {
+  display: grid;
+  grid-template-columns: 35% auto 10%;
+  grid-auto-rows: minmax(50px, auto);
+  grid-gap: 10px;
+  max-width: 960px;
+  /* margin: auto; */
+  grid-template-areas:
+    "header  header  header"
+    "links   links   links"
+    "data    data    data"
+    "footer  footer  footer";
+}
+
+@media screen and (min-width: 900px) {
+  .grid-container {
+    display: grid;
+    grid-template-columns: 35% auto 10%;
+    grid-auto-rows: minmax(50px, auto);
+    grid-gap: 10px;
+    max-width: 1280px;
+    /* margin: auto; */
+    grid-template-areas:
+      "header  links   links"
+      "data    data    data"
+      "footer  footer  footer";
+  }
 }
 </style>
