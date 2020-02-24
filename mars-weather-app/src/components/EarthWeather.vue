@@ -22,8 +22,10 @@
 <script>
 export default {
   name: 'EarthWeather',
-  props: {
-    earthTemps: Array
+  computed: {
+    earthTemps () {
+      return this.$store.getters.getEarthData
+    }
   }
 }
 </script>

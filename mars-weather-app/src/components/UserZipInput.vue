@@ -3,8 +3,9 @@
   <h3>Want to compare to your local weather today?</h3>
   <br>
   <div class="form">
-  <label for="newName">Zip Code:</label>
-  <input type="text" v-model="zip.value" maxlength="5" placeholder="78240" v-on:keydown.enter='getZipCode()'/>
+  <label for="zip">Enter a valid US Zip Code:</label>
+  <input type='input' v-model='inputText' maxlength="5" placeholder="78240"/>
+  <button id='getZipCode' color='primary' v-on:click='save'>Submit</button>
   </div>
   </div>
 </template>
@@ -14,18 +15,13 @@ export default {
   name: 'UserZipInput',
   data () {
     return {
-      zip: ''
+      inputText: ''
     }
   },
   methods: {
-    getZipCode (zip) {
-      if (this.zip.value !== '') {
-        // console.log('zip code input: ', this.zip.value)
-        this.$emit('zip', this.zip.value)
-
-        // Clear the variables used for reading in the new user's info
-        this.zip = ''
-      }
+    save () {
+      this.$emit('save', this.inputText)
+      this.inputText = ''
     }
   }
 }

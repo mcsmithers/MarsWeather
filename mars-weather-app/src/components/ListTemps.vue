@@ -13,10 +13,10 @@
         <th>AvgTemp</th>
       </tr>
       <!-- Table Elements (Rows) -->
-      <tr v-for="temp in temps" :key="temp.sol">
-        <td>{{ temp.sol }}</td>
-        <td>{{ temp.date }}</td>
-        <td>{{ temp.avg }}</td>
+      <tr v-for="marsTemp in marsTemps" :key="marsTemp.sol">
+        <td>{{ marsTemp.sol }}</td>
+        <td>{{ marsTemp.date }}</td>
+        <td>{{ marsTemp.avg }}</td>
       </tr>
     </table>
     <br>
@@ -26,8 +26,10 @@
 <script>
 export default {
   name: 'ListTemps',
-  props: {
-    temps: Array
+  computed: {
+    marsTemps () {
+      return this.$store.getters.getMarsData
+    }
   }
 }
 </script>
