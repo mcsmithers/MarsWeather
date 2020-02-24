@@ -33,6 +33,12 @@ export default new Vuex.Store({
     },
     setBannerType: (state, payload) => {
       state.bannerType = payload
+    },
+    setMarsData: (state, payload) => {
+      state.marsTemps = payload
+    },
+    setEarthData: (state, payload) => {
+      state.earthTemps = payload
     }
   },
   actions: {
@@ -40,13 +46,50 @@ export default new Vuex.Store({
       context.commit('setBannerMessage', payload.message)
       context.commit('setBannerType', payload.type)
     },
-    getEarthData: (context) => {
+    retrieveMarsData: (context) => {
+      // GET request for Mars temp data
+      axios.get('https://api.nasa.gov/insight_weather/?api_key=DEMO_KEY&feedtype=json&ver=1.0')
+        .then((response) => {
+        // handle success
+          const respData = response.data
+          context.commit = 'Success'
+          context.commit = 'SUCCESS! Loaded Mars data!'
+
+          // Breaking up the data to be in a data structure a little easier to work with
+          const sols = Object.keys(respData)
+          const mars = Object.values(respData)
+          const marsTemps = []
+          marsTemps.sol = sols[0]
+          marsTemps.date = mars[0].First_UTC.slice(0, 10)
+          marsTemps.avgC = mars[0].AT.av
+          marsTemps.avgF = mars.avgC * 9 / 5 + 32
+          console.log(marsTemps)
+
+          // return marsTemps
+          var mountedMarsTemps = marsTemps.map(function (temp) {
+            return temp
+          })
+
+          context.commit('setMarsTemps', mountedMarsTemps)
+        })
+        .catch((error) => {
+          // handle error
+          context.commit = 'Error'
+          context.commit = 'ERROR! Unable to load Mars data!'
+          console.log(error.message)
+        })
+        .finally((response) => {
+          // always executed
+          console.log('Finished fetching Mars!', response)
+        })
+    },
+    retrieveEarthData: (context) => {
       axios.get('https://api.openweathermap.org/data/2.5/weather?zip=78240,us&appid=18fcb2ae16f7d9575c588dac714c9282')
         .then((response) => {
           // handle success
           const respData = response.data
-          this.messageType = 'Success'
-          this.messageToDisplay = 'SUCCESS! Loaded Earth data!'
+          context.commit = 'Success'
+          context.commit = 'SUCCESS! Loaded Earth data!'
 
           // Breaking up the data to be in a data structure a little easier to work with
           const earth = Object.values(respData)
@@ -70,7 +113,13 @@ export default new Vuex.Store({
           earthTemps.avg = avgF.toFixed(2)
           earthTemps.city = yourCity
           console.log(earthTemps)
-          return earthTemps
+          // return earthTemps
+          // return marsTemps
+          var mountedEarthTemps = earthTemps.map(function (temp) {
+            return temp
+          })
+
+          context.commit('setEarthTemps', mountedEarthTemps)
         })
         .catch((error) => {
           // handle error
@@ -81,36 +130,6 @@ export default new Vuex.Store({
         .finally((response) => {
         // always executed
           console.log('Finished fetching earth!', response)
-        })
-    },
-    getMarsData: (context) => {
-      // GET request for Mars temp data
-      axios.get('https://api.nasa.gov/insight_weather/?api_key=DEMO_KEY&feedtype=json&ver=1.0')
-        .then((response) => {
-        // handle success
-          const respData = response.data
-          this.messageType = 'Success'
-          this.messageToDisplay = 'SUCCESS! Loaded Mars data!'
-
-          // Breaking up the data to be in a data structure a little easier to work with
-          const sols = Object.keys(respData)
-          const mars = Object.values(respData)
-          const marsTemps = []
-          marsTemps.sol = sols[0]
-          marsTemps.date = mars[0].First_UTC.slice(0, 10)
-          marsTemps.avgC = mars[0].AT.av
-          marsTemps.avgF = mars.avgC * 9 / 5 + 32
-          return marsTemps
-        })
-        .catch((error) => {
-          // handle error
-          this.messageType = 'Error'
-          this.messageToDisplay = 'ERROR! Unable to load Mars data!'
-          console.log(error.message)
-        })
-        .finally((response) => {
-          // always executed
-          console.log('Finished fetching Mars!', response)
         })
     }
   },
