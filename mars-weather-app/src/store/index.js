@@ -70,13 +70,7 @@ export default new Vuex.Store({
           marsTemps.date = mars[0].First_UTC.slice(0, 10)
           marsTemps.avg = parseInt(mars[0].AT.av * (9 / 5) + 32)
           console.log(marsTemps)
-
-          // return marsTemps
-          var mountedMarsTemps = marsTemps.map(function (temp) {
-            return temp
-          })
-
-          context.commit('setMarsData', mountedMarsTemps)
+          context.commit('setMarsData', marsTemps)
         })
         .catch((error) => {
           // handle error
@@ -86,7 +80,7 @@ export default new Vuex.Store({
         })
         .finally((response) => {
           // always executed
-          // console.log('Finished fetching Mars!', response)
+          console.log('Finished fetching Mars!')
         })
     },
     retrieveEarthData: (context, payload) => {
@@ -121,13 +115,7 @@ export default new Vuex.Store({
           earthTemps.avg = avg.toFixed()
           earthTemps.city = yourCity
           console.log(earthTemps)
-          // return earthTemps
-          // return marsTemps
-          var mountedEarthTemps = earthTemps.map(function (temp) {
-            return temp
-          })
-
-          context.commit('setEarthData', mountedEarthTemps)
+          context.commit('setEarthData', earthTemps)
         })
         .catch((error) => {
           // handle error
@@ -137,7 +125,7 @@ export default new Vuex.Store({
         })
         .finally((response) => {
         // always executed
-          // console.log('Finished fetching earth!', response)
+          console.log('Finished fetching earth!')
         })
     }
   },
