@@ -10,7 +10,7 @@
         <th>City</th>
       </tr>
       <!-- Table Elements (Rows) -->
-      <tr v-for="earthTemp in earthTemps" :key="earthTemp.earthDate">
+      <tr v-for="earthTemp in earthTemps" :key="earthTemp.date">
         <td>{{ earthTemp.date }}</td>
         <td>{{ earthTemp.avg }}</td>
         <td>{{ earthTemp.city }}</td>

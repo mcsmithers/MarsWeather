@@ -11,6 +11,7 @@ export default new Vuex.Store({
     // Types: Error, Info, or Success
     bannerType: 'Info',
     marsTemps: [],
+    inputText: '',
     earthTemps: []
   },
   getters: {
@@ -19,6 +20,9 @@ export default new Vuex.Store({
     },
     getBannerType: (state) => {
       return state.bannerType
+    },
+    getZipCode: (state) => {
+      return state.inputText
     },
     getEarthData: (state) => {
       return state.earthTemps
@@ -37,6 +41,9 @@ export default new Vuex.Store({
     setMarsData: (state, payload) => {
       state.marsTemps = payload
     },
+    setZipCode: (state, payload) => {
+      state.inputText = payload
+    },
     setEarthData: (state, payload) => {
       state.earthTemps = payload
     }
@@ -52,8 +59,8 @@ export default new Vuex.Store({
         .then((response) => {
         // handle success
           const respData = response.data
-          context.commit = 'Success'
-          context.commit = 'SUCCESS! Loaded Mars data!'
+          context.commit('setBannerMessage', 'Success')
+          context.commit('setBannerType', 'SUCCESS! Loaded Mars data!')
 
           // Breaking up the data to be in a data structure a little easier to work with
           const sols = Object.keys(respData)
@@ -61,8 +68,7 @@ export default new Vuex.Store({
           const marsTemps = []
           marsTemps.sol = sols[0]
           marsTemps.date = mars[0].First_UTC.slice(0, 10)
-          marsTemps.avgC = mars[0].AT.av
-          marsTemps.avgF = mars.avgC * 9 / 5 + 32
+          marsTemps.avg = parseInt(mars[0].AT.av * (9 / 5) + 32)
           console.log(marsTemps)
 
           // return marsTemps
@@ -74,43 +80,45 @@ export default new Vuex.Store({
         })
         .catch((error) => {
           // handle error
-          context.commit = 'Error'
-          context.commit = 'ERROR! Unable to load Mars data!'
+          context.commit('setBannerMessage', 'ERROR! Unable to load MArs data!')
+          context.commit('setBannerType', 'Error')
           console.log(error.message)
         })
         .finally((response) => {
           // always executed
-          console.log('Finished fetching Mars!', response)
+          // console.log('Finished fetching Mars!', response)
         })
     },
-    retrieveEarthData: (context) => {
+    retrieveEarthData: (context, payload) => {
       axios.get('https://api.openweathermap.org/data/2.5/weather?zip=78240,us&appid=18fcb2ae16f7d9575c588dac714c9282')
+      // input text payload???
+      // axios.get('https://api.openweathermap.org/data/2.5/weather?zip=' + inputText + ',us&appid=18fcb2ae16f7d9575c588dac714c9282')
         .then((response) => {
           // handle success
           const respData = response.data
-          context.commit = 'Success'
-          context.commit = 'SUCCESS! Loaded Earth data!'
+          context.commit('setBannerMessage', 'SUCCESS! Loaded Earth data!')
+          context.commit('setBannerType', 'Success')
 
           // Breaking up the data to be in a data structure a little easier to work with
           const earth = Object.values(respData)
           // console.log(earthTemps)
 
           // getting the city
-          const yourCity = earth[12]
+          const yourCity = earth[11]
 
           // formatting date to be consistent
           const strDate = new Date()
           const date = strDate.toISOString().split('T')[0]
 
           // formatting degrees to be in f not k
-          const avgK = earth[3].temp
-          const avgC = avgK - 273.15
-          const avgF = avgC * (9 / 5) + 32
+          const avgK = parseInt(earth[3].temp)
+          const avgC = parseInt(avgK - 273.15)
+          const avg = parseInt(avgC * (9 / 5) + 32)
 
           // putting all this in an earth array
           const earthTemps = []
           earthTemps.date = date
-          earthTemps.avg = avgF.toFixed(2)
+          earthTemps.avg = avg.toFixed()
           earthTemps.city = yourCity
           console.log(earthTemps)
           // return earthTemps
@@ -123,13 +131,13 @@ export default new Vuex.Store({
         })
         .catch((error) => {
           // handle error
-          this.messageType = 'Error'
-          this.messageToDisplay = 'ERROR! Unable to load Earth data!'
+          context.commit('setBannerMessage', 'ERROR! Unable to load MArs data!')
+          context.commit('setBannerType', 'Error')
           console.log(error.message)
         })
         .finally((response) => {
         // always executed
-          console.log('Finished fetching earth!', response)
+          // console.log('Finished fetching earth!', response)
         })
     }
   },

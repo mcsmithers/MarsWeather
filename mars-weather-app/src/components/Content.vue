@@ -22,8 +22,8 @@ export default {
     'app-banner': Banner
   },
   created () {
-    this.store.dispatch('retrieveMarsData')
-    this.store.dispatch('retrieveEarthData')
+    this.$store.dispatch('retrieveMarsData')
+    this.$store.dispatch('retrieveEarthData')
   }
 }
 </script>

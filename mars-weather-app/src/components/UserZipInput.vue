@@ -4,7 +4,7 @@
   <br>
   <div class="form">
   <label for="zip">Enter a valid US Zip Code:</label>
-  <input type='input' v-model='inputText' maxlength="5" placeholder="78240"/>
+  <input type='input' v-model='inputText' maxlength="5" placeholder=" e.g. 78240"/>
   <button id='getZipCode' color='primary' v-on:click='save'>Submit</button>
   </div>
   </div>
@@ -21,6 +21,7 @@ export default {
   methods: {
     save () {
       this.$emit('save', this.inputText)
+      console.log(this.inputText)
       this.inputText = ''
     }
   }
