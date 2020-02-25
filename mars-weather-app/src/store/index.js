@@ -76,7 +76,7 @@ export default new Vuex.Store({
             return temp
           })
 
-          context.commit('setMarsTemps', mountedMarsTemps)
+          context.commit('setMarsData', mountedMarsTemps)
         })
         .catch((error) => {
           // handle error
@@ -127,7 +127,7 @@ export default new Vuex.Store({
             return temp
           })
 
-          context.commit('setEarthTemps', mountedEarthTemps)
+          context.commit('setEarthData', mountedEarthTemps)
         })
         .catch((error) => {
           // handle error
