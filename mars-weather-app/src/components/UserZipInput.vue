@@ -23,7 +23,6 @@ export default {
       this.$emit('save', this.inputText)
       // console.log(this.inputText)
       this.inputText = ''
-      // this.$store.dispatch('setZip')
     }
   }
 }

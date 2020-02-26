@@ -87,7 +87,7 @@ export default new Vuex.Store({
         })
         .catch((error) => {
           // handle error
-          context.commit('setBannerMessage', 'ERROR! Unable to load MArs data!')
+          context.commit('setBannerMessage', 'ERROR! Unable to load Mars data!')
           context.commit('setBannerType', 'Error')
           console.log(error.message)
         })
@@ -96,12 +96,12 @@ export default new Vuex.Store({
           console.log('Finished fetching Mars!')
         })
     },
-    // setZip: (context, payload) => {
-    //   context.commit('setZipCode', payload.inputText)
-    // },
+    setZip: (context, payload) => {
+      context.commit('setZipCode', payload.inputText)
+    },
     retrieveEarthData: (context) => {
       const zip = context.state.inputText
-      if (zip !== null) {
+      if (zip) {
         axios.get('https://api.openweathermap.org/data/2.5/weather?zip=' + zip + ',us&appid=18fcb2ae16f7d9575c588dac714c9282')
           .then((response) => {
             // handle success
@@ -143,7 +143,7 @@ export default new Vuex.Store({
           })
           .catch((error) => {
             // handle error
-            context.commit('setBannerMessage', 'ERROR! Unable to load MArs data!')
+            context.commit('setBannerMessage', 'ERROR! Unable to load Earth data!')
             context.commit('setBannerType', 'Error')
             console.log(error.message)
           })
