@@ -5,15 +5,15 @@
   <table id="earth-temps-table">
       <!-- Table Header Row -->
       <tr>
+        <th>City</th>
         <th>Date</th>
         <th>Temp</th>
-        <th>City</th>
       </tr>
       <!-- Table Elements (Rows) -->
       <tr v-for="earthTemp in earthTemps" :key="earthTemp.date">
+        <td>{{ earthTemp.city }}</td>
         <td>{{ earthTemp.date }}</td>
         <td>{{ earthTemp.avg }}</td>
-        <td>{{ earthTemp.city }}</td>
       </tr>
     </table>
   </div>

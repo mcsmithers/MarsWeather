@@ -20,7 +20,7 @@ export default {
 /* Navigation Links Styling
 *********************/
 nav {
-  margin: 0 auto;
+  margin: -0.5 auto;
 }
 
 nav ul {

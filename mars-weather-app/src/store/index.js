@@ -11,6 +11,8 @@ export default new Vuex.Store({
     // Types: Error, Info, or Success
     bannerType: 'Info',
     marsTemps: [],
+    // Bliank initial value though Anchorage AK is here fot tests
+    // inputText: '99501',
     inputText: '',
     earthTemps: []
   },
@@ -65,11 +67,22 @@ export default new Vuex.Store({
           // Breaking up the data to be in a data structure a little easier to work with
           const sols = Object.keys(respData)
           const mars = Object.values(respData)
+
+          // Pick out our data and clean it to look how most users would understand in the US
+          const marsHolder = []
+          marsHolder.sol = sols[0]
+          marsHolder.date = mars[0].First_UTC.slice(0, 10)
+          marsHolder.avg = parseInt(mars[0].AT.av * (9 / 5) + 32)
+          // console.log(marsHolder)
+
+          // Put the cleaned up data in to an object into the array
+          const marsObj = Object.assign({}, marsHolder)
+          // console.log(marsObj)
           const marsTemps = []
-          marsTemps.sol = sols[0]
-          marsTemps.date = mars[0].First_UTC.slice(0, 10)
-          marsTemps.avg = parseInt(mars[0].AT.av * (9 / 5) + 32)
-          console.log(marsTemps)
+          marsTemps.push(marsObj)
+          // console.log(marsTemps)
+
+          // Now with the data in a usable form, we can sent it to the context
           context.commit('setMarsData', marsTemps)
         })
         .catch((error) => {
@@ -83,50 +96,62 @@ export default new Vuex.Store({
           console.log('Finished fetching Mars!')
         })
     },
-    retrieveEarthData: (context, payload) => {
-      axios.get('https://api.openweathermap.org/data/2.5/weather?zip=78240,us&appid=18fcb2ae16f7d9575c588dac714c9282')
-      // input text payload???
-      // axios.get('https://api.openweathermap.org/data/2.5/weather?zip=' + inputText + ',us&appid=18fcb2ae16f7d9575c588dac714c9282')
-        .then((response) => {
-          // handle success
-          const respData = response.data
-          context.commit('setBannerMessage', 'SUCCESS! Loaded Earth data!')
-          context.commit('setBannerType', 'Success')
+    // setZip: (context, payload) => {
+    //   context.commit('setZipCode', payload.inputText)
+    // },
+    retrieveEarthData: (context) => {
+      const zip = context.state.inputText
+      if (zip !== null) {
+        axios.get('https://api.openweathermap.org/data/2.5/weather?zip=' + zip + ',us&appid=18fcb2ae16f7d9575c588dac714c9282')
+          .then((response) => {
+            // handle success
+            const respData = response.data
+            context.commit('setBannerMessage', 'SUCCESS! Loaded Earth data!')
+            context.commit('setBannerType', 'Success')
 
-          // Breaking up the data to be in a data structure a little easier to work with
-          const earth = Object.values(respData)
-          // console.log(earthTemps)
+            // Breaking up the data to be in a data structure a little easier to work with
+            const earth = Object.values(respData)
+            // console.log(earthTemps)
 
-          // getting the city
-          const yourCity = earth[11]
+            // getting the city
+            const yourCity = earth[11]
 
-          // formatting date to be consistent
-          const strDate = new Date()
-          const date = strDate.toISOString().split('T')[0]
+            // formatting date to be consistent
+            const strDate = new Date()
+            const date = strDate.toISOString().split('T')[0]
 
-          // formatting degrees to be in f not k
-          const avgK = parseInt(earth[3].temp)
-          const avgC = parseInt(avgK - 273.15)
-          const avg = parseInt(avgC * (9 / 5) + 32)
+            // formatting degrees to be in f not k for American users
+            const avgK = parseInt(earth[3].temp)
+            const avgC = parseInt(avgK - 273.15)
+            const avg = parseInt(avgC * (9 / 5) + 32)
 
-          // putting all this in an earth array
-          const earthTemps = []
-          earthTemps.date = date
-          earthTemps.avg = avg.toFixed()
-          earthTemps.city = yourCity
-          console.log(earthTemps)
-          context.commit('setEarthData', earthTemps)
-        })
-        .catch((error) => {
-          // handle error
-          context.commit('setBannerMessage', 'ERROR! Unable to load MArs data!')
-          context.commit('setBannerType', 'Error')
-          console.log(error.message)
-        })
-        .finally((response) => {
-        // always executed
-          console.log('Finished fetching earth!')
-        })
+            // Putting all this in an earth array so that data looks good for the table
+            const earthHolder = []
+            earthHolder.date = date
+            earthHolder.avg = avg.toFixed()
+            earthHolder.city = yourCity
+            // console.log(earthHolder)
+
+            // Put the cleaned up data in to an object into the array
+            const earthObj = Object.assign({}, earthHolder)
+            // console.log(earthObj)
+            const earthTemps = []
+            earthTemps.push(earthObj)
+            // console.log(earthTemps)
+            context.commit('setEarthData', earthTemps)
+            context.commit('setEarthData', earthTemps)
+          })
+          .catch((error) => {
+            // handle error
+            context.commit('setBannerMessage', 'ERROR! Unable to load MArs data!')
+            context.commit('setBannerType', 'Error')
+            console.log(error.message)
+          })
+          .finally((response) => {
+            // always executed
+            console.log('Finished fetching earth!')
+          })
+      }
     }
   },
   modules: {

@@ -32,6 +32,6 @@ export default {
 <style scoped>
 div {
   margin: auto;
-  padding: 4em;
+  padding: 2em;
 }
 </style>

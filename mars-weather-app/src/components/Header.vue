@@ -20,6 +20,6 @@ header {
 }
 
 header h1 {
-  font-size: 2.5em;
+  font-size: 2em;
 }
 </style>
