@@ -4,28 +4,24 @@
   <br>
   <div class="form">
   <label for="zip">Enter a valid US Zip Code:</label>
-  <!-- <input type='input' v-model='zip' maxlength="5" minlength="5" placeholder=" e.g. 78240"/> -->
-  <input :value="zip">
-  <button id='getZipCode' color='primary' v-on:click='save'>Submit</button>
+  <input :value="zip" @input="setZipCode($event.target.value)" :maxlength="5" :minlength="5">
+  <button color='primary' v-on:click='save'>Submit</button>
   </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 
 export default {
   name: 'UserZipInput',
-  data () {
-    zipValue: ''
-  },
   computed: {
     ...mapState(['zip'])
   },
   methods: {
-    ...mapActions(['processZip']),
+    ...mapMutations(['setZipCode']),
     save () {
-      this.processZip(this.zipValue)
+      this.$store.dispatch('retrieveEarthData')
     }
   }
 }
