@@ -1,10 +1,10 @@
 import { shallowMount } from '@vue/test-utils'
 import ListTemps from '@/components/ListTemps.vue'
 import Content from '@/components/Content.vue'
-import axios from 'axios'
+// import axios from 'axios'
 
 // Mock the axios library
-jest.mock('axios')
+// jest.mock('axios')
 
 // // API fetching test
 // describe('Content.vue Test with Successful HTTP GET', () => {
