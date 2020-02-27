@@ -55,9 +55,6 @@ export default new Vuex.Store({
       context.commit('setBannerMessage', payload.message)
       context.commit('setBannerType', payload.type)
     },
-    processZip: ({ commit, zip }) => {
-      commit('setZipCode', zip)
-    },
     retrieveMarsData: (context) => {
       // GET request for Mars temp data
       axios.get('https://api.nasa.gov/insight_weather/?api_key=DEMO_KEY&feedtype=json&ver=1.0')
@@ -99,7 +96,7 @@ export default new Vuex.Store({
           console.log('Finished fetching Mars!')
         })
     },
-    processZip: ({ commit}, zip) => {
+    processZip: ({ commit }, zip) => {
       commit('setZipCode', zip)
     },
     retrieveEarthData: (context) => {
