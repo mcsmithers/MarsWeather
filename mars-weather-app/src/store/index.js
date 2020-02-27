@@ -11,9 +11,9 @@ export default new Vuex.Store({
     // Types: Error, Info, or Success
     bannerType: 'Info',
     marsTemps: [],
-    // Bliank initial value though Anchorage AK is here fot tests
+    // Blank initial value though Anchorage AK is here fot tests
     // inputText: '99501',
-    inputText: '',
+    zip: '',
     earthTemps: []
   },
   getters: {
@@ -24,7 +24,7 @@ export default new Vuex.Store({
       return state.bannerType
     },
     getZipCode: (state) => {
-      return state.inputText
+      return state.zip
     },
     getEarthData: (state) => {
       return state.earthTemps
@@ -44,7 +44,7 @@ export default new Vuex.Store({
       state.marsTemps = payload
     },
     setZipCode: (state, payload) => {
-      state.inputText = payload
+      state.zip = payload
     },
     setEarthData: (state, payload) => {
       state.earthTemps = payload
@@ -54,6 +54,9 @@ export default new Vuex.Store({
     setBanner: (context, payload) => {
       context.commit('setBannerMessage', payload.message)
       context.commit('setBannerType', payload.type)
+    },
+    processZip: ({ commit, zip }) => {
+      commit('setZipCode', zip)
     },
     retrieveMarsData: (context) => {
       // GET request for Mars temp data
@@ -96,11 +99,11 @@ export default new Vuex.Store({
           console.log('Finished fetching Mars!')
         })
     },
-    setZip: (context, payload) => {
-      context.commit('setZipCode', payload.inputText)
+    processZip: ({ commit}, zip) => {
+      commit('setZipCode', zip)
     },
     retrieveEarthData: (context) => {
-      const zip = context.state.inputText
+      const zip = context.state.zip
       if (zip) {
         axios.get('https://api.openweathermap.org/data/2.5/weather?zip=' + zip + ',us&appid=18fcb2ae16f7d9575c588dac714c9282')
           .then((response) => {
@@ -138,7 +141,6 @@ export default new Vuex.Store({
             const earthTemps = []
             earthTemps.push(earthObj)
             // console.log(earthTemps)
-            context.commit('setEarthData', earthTemps)
             context.commit('setEarthData', earthTemps)
           })
           .catch((error) => {
