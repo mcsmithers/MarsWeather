@@ -3,7 +3,9 @@
 This is a VueJS project to pull in temperatures from Mars and then allow the user to compare it to their local Earth temperatures.
 
 ## Project setup
+First go into the `mars-weather-app` directory then install the Node packages
 ```
+cd mars-weather-app
 npm install
 ```
 
